@@ -1,3 +1,4 @@
+```
 mkelfs
 ======
 
@@ -56,5 +57,6 @@ Link to post: http://blog.tpa.me.uk/2013/12/10/creating-a-spacewalk-cobbler-kick
 
 
 FEEDBACK
-========
+=======
 Feedback is always welcome - this is my first python script so feel free to help me optimizing it! :-)
+```
