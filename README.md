@@ -9,7 +9,7 @@ mkelfs is a tiny python application for creating kickstart trees for EL-like dis
 USAGE
 =====
 
-mkelks [options]
+mkelfs [options]
 
 Options:
   --version             show program's version number and exit
@@ -36,13 +36,13 @@ Options:
 EXAMPLES
 ========
 
-mkelks --release 6.5 --arch x86_64
+$ mkelfs --release 6.5 --arch x86_64
 
 downloads the latest kickstart files for CentOS 6.5 x86_64 to var/satellite/kickstart_tree.
 Mirror http://mirrors.kernel.org/centos is used.
 
 
-mkelks --release 4.1 --arch i386 --target /var/museum/ks --mirror http://vault.centos.org
+$ mkelfs --release 4.1 --arch i386 --target /var/museum/ks --mirror http://vault.centos.org
 
 downloads the antiquated CentOS release 4.1 for i386 from the CentOS Vault mirror site.
 Files are stored in /var/museum/ks
