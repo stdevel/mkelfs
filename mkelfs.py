@@ -40,7 +40,7 @@ if __name__ == "__main__":
         #parse arguments
         (options, args) = parser.parse_args()
 
-        #check whether all required options are given - currently BROKEN :(
+        #check whether all required options are given
         if options.release is None and options.arch is None:
                 parser.error("missing values for release and arch!")
         else:
