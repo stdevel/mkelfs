@@ -28,7 +28,8 @@ Options:
                         alternatives
   -o DISTRO, --distro=DISTRO
                         defines for which distro the files are downloaded
-                        (default: centos) - other possible values: fedora, sl
+                        (default: centos) - other possible values: fedora,
+                        scientific
   -f, --force           defines whether pre-existing kickstart files shall be
                         overwritten
   -q, --quiet           don't print status messages to stdout
