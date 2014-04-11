@@ -16,7 +16,7 @@ import shutil
 if __name__ == "__main__":
         #define description, version and load parser
         desc="%prog is used to create kickstartable distribution trees of EL-like distros like CentOS, Fedora and ScientificLinux"
-        parser = OptionParser(description=desc,version="%prog version 0.1")
+        parser = OptionParser(description=desc,version="%prog version 0.2")
 
         #-r / --release
         parser.add_option("-r", "--release", action="store", type="string", dest="release", help="define which release to use (e.g. 6.5)", metavar="RELEASE")
