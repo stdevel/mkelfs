@@ -27,7 +27,7 @@ if __name__ == "__main__":
         #-m / --mirror
         parser.add_option("-m", "--mirror", dest="mirror", default="http://mirrors.kernel.org/centos", action="store", type="string", help="define a valid EL mirror to use (default: CentOS - http://mirrors.kernel.org/centos) - DON'T add the trailing slash! Have a loot at the EL mirror list (e.g. http://www.centos.org/download/mirrors) for alternatives", metavar="MIRROR")
         #-o / --distribution
-        parser.add_option("-o", "--distro", dest="distro", default="centos", action="store", type="string", help="defines for which distro the files are downloaded (default: centos) - other possible values: fedora, sl", metavar="DISTRO")
+        parser.add_option("-o", "--distro", dest="distro", default="centos", action="store", type="string", help="defines for which distro the files are downloaded (default: centos) - other possible values: fedora, scientific", metavar="DISTRO")
         #-f / --force
         parser.add_option("-f", "--force", dest="force", default=False, action="store_true", help="defines whether pre-existing kickstart files shall be overwritten")
         #-q / --quiet
