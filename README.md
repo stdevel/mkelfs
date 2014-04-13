@@ -52,9 +52,9 @@ downloads the antiquated CentOS release 4.1 for i386 from the CentOS Vault mirro
 Files are stored in /var/museum/ks
 
 
-$ mkelfs.py -r 6.4 -a x86_64 -m http://www.nic.funet.fi/pub/Linux/INSTALL/scientific -o scientific -fq
+$ mkelfs.py -r 6.4 -a x86_64 -o scientific -fq
 
-downloads the Scientific Linux release 6.4 x86_64 from a Finnish mirror. Pre-existing files are overwritten and no additional output is generated.
+downloads the Scientific Linux release 6.4 x86_64 from the default mirror. Pre-existing files are overwritten and no additional output is generated.
 
 
 $ mkelfs.py -f -r 20 -a i386 -m http://mirror.digitalnova.at/fedora/linux -o fedora
