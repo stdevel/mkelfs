@@ -1,5 +1,10 @@
 CHANGELOG
 
+0.3 - 2014-04-13
+- added default mirrors for Fedora and Scientific Linux
+- folder structures are now created in lower-case and stripped depending on mirror and distro
+- file system path is displayed after downloading (just c&p into cobbler or Spacewalk/Satellite/SUSE Manager WebUI)
+
 0.2 - 2014-04-11
 - updated support for other EL-like distros (Fedora, Scientific Linux)
 
