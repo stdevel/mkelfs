@@ -13,10 +13,15 @@ import sys
 import os
 import shutil
 
+#defining default mirrors
+default_centos="http://mirror.centos.org/centos"
+default_scientific="http://ftp.scientificlinux.org/linux/scientific"
+default_fedora="http://mirrors.kernel.org/fedora"
+
 if __name__ == "__main__":
         #define description, version and load parser
         desc="%prog is used to create kickstartable distribution trees of EL-like distros like CentOS, Fedora and ScientificLinux"
-        parser = OptionParser(description=desc,version="%prog version 0.2")
+        parser = OptionParser(description=desc,version="%prog version 0.3")
 
         #-r / --release
         parser.add_option("-r", "--release", action="store", type="string", dest="release", help="define which release to use (e.g. 6.5)", metavar="RELEASE")
@@ -25,14 +30,13 @@ if __name__ == "__main__":
         #-t / --target
         parser.add_option("-t", "--target", action="store", type="string", dest="target", default="/var/satellite/kickstart_tree", help="define where to store kickstart files. A subfolder will be created automatically. (default: /var/satellite/kickstart_tree)", metavar="DIR")
         #-m / --mirror
-        parser.add_option("-m", "--mirror", dest="mirror", default="http://mirrors.kernel.org/centos", action="store", type="string", help="define a valid EL mirror to use (default: CentOS - http://mirrors.kernel.org/centos) - DON'T add the trailing slash! Have a loot at the EL mirror list (e.g. http://www.centos.org/download/mirrors) for alternatives", metavar="MIRROR")
+        parser.add_option("-m", "--mirror", dest="mirror", action="store", type="string", help="define a valid EL mirror to use - DON'T add the trailing slash! Have a loot at the EL mirror list (e.g. http://www.centos.org/download/mirrors) for alternatives", metavar="MIRROR")
         #-o / --distribution
         parser.add_option("-o", "--distro", dest="distro", default="centos", action="store", type="string", help="defines for which distro the files are downloaded (default: centos) - other possible values: fedora, scientific", metavar="DISTRO")
         #-f / --force
         parser.add_option("-f", "--force", dest="force", default=False, action="store_true", help="defines whether pre-existing kickstart files shall be overwritten")
         #-q / --quiet
         parser.add_option("-q", "--quiet",
-                          action="store_false", dest="verbose", default=True,
                           help="don't print status messages to stdout")
         #-d / --debug
         parser.add_option("-d", "--debug", dest="debug", default=False, action="store_true", help="enable debugging outputs")
@@ -44,14 +48,22 @@ if __name__ == "__main__":
         if options.release is None and options.arch is None:
                 parser.error("missing values for release and arch!")
         else:
-                #print debug output if required
-                if options.debug: print("release: " + options.release + "\narch: " + options.arch + "\ntarget: " + options.target + "\nmirror: " + options.mirror + "\nforce: " + `options.force` + "\nverbose: " + `options.verbose` + "\ndebug: " + `options.debug` + "\ndistro: " + options.distro)
+                #make options being lower-case in case you missed it
+                options.distro = options.distro.lower()
+                options.release = options.release.lower()
+                options.arch = options.arch.lower()
 
-                #setup URL depending on selected distro
+                #setup default mirror URL (if no other defined) depending on selected distro
+                if options.mirror == None:
+                        if options.distro.lower() == "scientific": options.mirror = default_scientific
+                        if options.distro.lower() == "fedora": options.mirror = default_fedora
+                        if options.distro.lower() == "centos": options.mirror = default_centos
                 if options.distro.lower() == "scientific": url = options.mirror+"/"+options.release+"/"+options.arch+"/os"
                 elif options.distro.lower() == "fedora": url = options.mirror+"/releases/"+options.release+"/Fedora/"+options.arch+"/os"
                 else: url = options.mirror+"/"+options.release+"/os/"+options.arch
-                if options.debug: print("URL: " + url)
+
+                #print debug output if required
+                if options.debug: print("release: " + options.release + "\narch: " + options.arch + "\ntarget: " + options.target + "\nmirror: " + options.mirror + "\nforce: " + `options.force` + "\nverbose: " + `options.verbose` + "\ndebug: " + `options.debug` + "\ndistro: " + options.distro + "\nURL: " + url)
 
                 #check whether target is writable
                 if os.access(options.target, os.W_OK):
@@ -79,8 +91,13 @@ if __name__ == "__main__":
                         #download files
                         if options.verbose: print "INFO: about to download kickstart files for EL "+options.release+" "+options.arch+" from mirror "+options.mirror+"..."
                         for i in ["images","isolinux","repodata"]:
+                                #setting offset based on mirror and distro
+                                if options.distro == "fedora": dir_offset=6
+                                elif "vault" in options.mirror: dir_offset=3
+                                else: dir_offset=4
+                                if options.debug: print "INFO: dir_offset: "+`dir_offset`
                                 #run wget with or without quiet mode
-                                cmd = "wget -e robots=off -r -nH --cut-dirs=4 --no-parent --reject 'index.html*' "+url+"/"+i+"/"
+                                cmd = "wget -e robots=off -r -nH --cut-dirs="+`dir_offset`+" --no-parent --reject 'index.html*' "+url+"/"+i+"/"
                                 if options.verbose == False:
                                         cmd = cmd+" --quiet"
                                         retcode = os.system(cmd)
@@ -92,6 +109,6 @@ if __name__ == "__main__":
                                         print >> sys.stderr, "ERROR: some error occurred (see output above!) - hint: check URL ("+options.mirror+"/"+options.release+")"
                                         exit(1)
                                 else:
-                                        if options.verbose: print "INFO: successfully downloaded kickstart files for EL "+options.release+" "+options.arch+"!"
+                                        if options.verbose: print "INFO: successfully downloaded kickstart files for EL "+options.release+" "+options.arch+"!\nUse this file path for cobbler or the webui: "+options.target+"/"+options.distro+"-"+options.release+"-"+options.arch
                 else:
                         print >> sys.stderr, "ERROR: path non-existent or non-writable!"
