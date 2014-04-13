@@ -43,7 +43,7 @@ EXAMPLES
 $ mkelfs.py --release 6.5 --arch x86_64
 
 downloads the latest kickstart files for CentOS 6.5 x86_64 to var/satellite/kickstart_tree.
-Mirror http://mirrors.kernel.org/centos is used.
+The default mirror.
 
 
 $ mkelfs.py --release 4.1 --arch i386 --target /var/museum/ks --mirror http://vault.centos.org
