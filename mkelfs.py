@@ -36,8 +36,7 @@ if __name__ == "__main__":
         #-f / --force
         parser.add_option("-f", "--force", dest="force", default=False, action="store_true", help="defines whether pre-existing kickstart files shall be overwritten")
         #-q / --quiet
-        parser.add_option("-q", "--quiet",
-                          help="don't print status messages to stdout")
+        parser.add_option("-q", "--quiet", action="store_false", dest="verbose", default=True, help="don't print status messages to stdout")
         #-d / --debug
         parser.add_option("-d", "--debug", dest="debug", default=False, action="store_true", help="enable debugging outputs")
 
