@@ -5,7 +5,13 @@ mkelfs is a tiny python application for creating kickstart trees for EL-like dis
 
 
 
-USAGE
+Video
+=====
+[![Creating Enterprise Linux kickstart trees with mkelfs](http://img.youtube.com/vi/FLzz2znW2vc/0.jpg)](http://www.youtube.com/watch?v=FLzz2znW2vc)
+
+
+
+Usage
 =====
 ```
 mkelfs.py [options]
