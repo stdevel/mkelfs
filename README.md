@@ -1,7 +1,7 @@
 mkelfs
 ======
 
-mkelfs is a tiny python application for creating kickstart trees for EL-like distros (e.g. CentOS, Fedora, ScientificLinux,...).
+mkelfs is a tiny python application for creating kickstart trees for EL-like distros (*e.g. CentOS, Fedora, ScientificLinux,...*).
 
 
 
@@ -70,14 +70,14 @@ Examples
 ```
 $ mkelfs.py --release 6.5 --arch x86_64 -c
 ```
-downloads the latest kickstart files for CentOS 6.5 x86_64 to var/satellite/kickstart_tree.
+downloads the latest kickstart files for CentOS 6.5 x86_64 to `/var/satellite/kickstart_tree`.
 The default mirror. A kickstart distribution is created afterwards (*interactive login*).
 
 ```
 $ mkelfs.py --release 4.1 --arch i386 --target /var/museum/ks --mirror http://vault.centos.org
 ```
 downloads the antiquated CentOS release 4.1 for i386 from the CentOS Vault mirror site.
-Files are stored in /var/museum/ks
+Files are stored in `/var/museum/ks`
 
 ```
 $ mkelfs.py -r 6.4 -a x86_64 -o scientific -fq
