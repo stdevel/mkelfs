@@ -1,7 +1,7 @@
 mkelfs
 ======
 
-`mkelfs` is a tiny python application for creating kickstart trees for EL-like distros (*e.g. CentOS, Fedora, ScientificLinux,...*).
+`mkelfs.py` is a tiny python application for creating kickstart trees for EL-like distros (*e.g. CentOS, Fedora, ScientificLinux,...*).
 
 
 
