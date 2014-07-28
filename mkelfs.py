@@ -26,7 +26,6 @@ default_fedora="http://mirrors.kernel.org/fedora"
 
 if __name__ == "__main__":
         #define description, version and load parser
-        #desc="%prog is used to create kickstartable distribution trees of EL-like distros like CentOS, Fedora and ScientificLinux"
         desc='''%prog is used to create kickstartable distribution trees of EL-like distros like CentOS, Fedora and ScientificLinux. Optionally you can also create kickstart distributions on Spacewalk, Red Hat Satellite and SUSE Manager. Login credentials are assigned using the following shell variables:
 
         SATELLITE_LOGIN username
