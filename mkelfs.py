@@ -57,7 +57,7 @@ if __name__ == "__main__":
         parser.add_option("-f", "--force", dest="force", default=False, action="store_true", help="defines whether pre-existing kickstart files shall be overwritten")
 
         #-i / --ignore-existing
-        parser.add_option("-i", "--ignore-existing", dest="ignoreExisting", default=False, action="store_true", help="don't throw errors if downloaded files are already existing (e.g. testing purposes")
+        parser.add_option("-i", "--ignore-existing", dest="ignoreExisting", default=False, action="store_true", help="don't throw errors if downloaded files are already existing (e.g. testing purposes)")
 
         #-q / --quiet
         parser.add_option("-q", "--quiet", action="store_false", dest="verbose", default=True, help="don't print status messages to stdout")
@@ -85,17 +85,17 @@ if __name__ == "__main__":
                 parser.error("missing values for release and arch!")
         else:
                 #make options being lower-case in case you missed it
-                options.distro = options.distro.lower()
-                options.release = options.release.lower()
-                options.arch = options.arch.lower()
+                options.distro = str(options.distro).lower()
+                options.release = str(options.release).lower()
+                options.arch = str(options.arch).lower()
 
                 #setup default mirror URL (if no other defined) depending on selected distro
                 if options.mirror == None:
-                        if options.distro.lower() == "scientific": options.mirror = default_scientific
-                        if options.distro.lower() == "fedora": options.mirror = default_fedora
-                        if options.distro.lower() == "centos": options.mirror = default_centos
-                if options.distro.lower() == "scientific": url = options.mirror+"/"+options.release+"/"+options.arch+"/os"
-                elif options.distro.lower() == "fedora": url = options.mirror+"/releases/"+options.release+"/Fedora/"+options.arch+"/os"
+                        if str(options.distro).lower() == "scientific": options.mirror = default_scientific
+                        if str(options.distro).lower() == "fedora": options.mirror = default_fedora
+                        if str(options.distro).lower() == "centos": options.mirror = default_centos
+                if str(options.distro).lower() == "scientific": url = options.mirror+"/"+options.release+"/"+options.arch+"/os"
+                elif str(options.distro).lower() == "fedora": url = options.mirror+"/releases/"+options.release+"/Fedora/"+options.arch+"/os"
                 else: url = options.mirror+"/"+options.release+"/os/"+options.arch
 
                 #print debug output if required
