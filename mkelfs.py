@@ -115,8 +115,8 @@ if __name__ == "__main__":
                         if filemode == "0600":
                                 if options.debug: print "DEBUG: file permission ("+filemode+") matches 0600"
                                 fo = open(options.authfile, "r")
-                                s_username=fo.readline()
-                                s_password=fo.readline()
+                                s_username=fo.readline().replace("\n", "")
+                                s_password=fo.readline().replace("\n", "")
                                 key = client.auth.login(s_username, s_password)
                         else:
                                 if options.verbose: print "ERROR: file permission ("+filemode+") not matching 0600!"
