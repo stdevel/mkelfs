@@ -3,9 +3,9 @@
 # mkelfs.py - script for downloading kickstart-relevant
 # files for EL-like distros like CentOS, Fedora etc.
 #
-# 2014 By Christian Stankowic
+# 2015 By Christian Stankowic
 # <info at stankowic hyphen development dot net>
-# https://github.com/stdevel
+# https://github.com/stdevel/mkelfs
 #
 
 from optparse import OptionParser
@@ -17,12 +17,28 @@ import getpass
 import stat
 
 #list of supported API levels
-supportedAPI = ["11.1","12","13","13.0","14","14.0","15","15.0"]
+supportedAPI = ["11.1","12","13","13.0","14","14.0","15","15.0","16","16.0"]
+
+#TODO: try to create /var/satellite/kickstart_tree
+#TODO: release 6. => 6 workaround?, try downloads!
+#TODO: append download for better debug instrad of delete and re-download
+
+#valid url cheatsheet - some URLs:
+#EL2.1:	http://vault.centos.org/2.1/final/i386/
+#EL3:	http://vault.centos.org/3.1/i386/
+#EL4:	http://vault.centos.org/4.0/os/i386/
+#EL5:	http://mirror.centos.org/centos/5.11/os/x86_64/
+#EL6:	http://mirror.centos.org/centos/6.6/os/x86_64/
+#EL7:	http://mirror.centos.org/centos/7/os/x86_64/
+#F18:	x
+#F19:	x
+#...
 
 #defining default mirrors
 default_centos="http://mirror.centos.org/centos"
 default_scientific="http://ftp.scientificlinux.org/linux/scientific"
 default_fedora="http://mirrors.kernel.org/fedora"
+default_folders=["images","isolinux","repodata"]
 
 if __name__ == "__main__":
         #define description, version and load parser
@@ -97,6 +113,11 @@ if __name__ == "__main__":
                 if str(options.distro).lower() == "scientific": url = options.mirror+"/"+options.release+"/"+options.arch+"/os"
                 elif str(options.distro).lower() == "fedora": url = options.mirror+"/releases/"+options.release+"/Fedora/"+options.arch+"/os"
                 else: url = options.mirror+"/"+options.release+"/os/"+options.arch
+		
+		#workaround for EL7
+		if options.release == "7" and options.distro.lower() in ["centos","scientific"]:
+			default_folders.append("LiveOS")
+			if options.verbose: print("INFO: EL7 detected, making sure to also download LiveOS")
 
                 #print debug output if required
                 if options.debug: print("release: " + options.release + "\narch: " + options.arch + "\ntarget: " + options.target + "\nmirror: " + options.mirror + "\nforce: " + `options.force` + "\nverbose: " + `options.verbose` + "\ndebug: " + `options.debug` + "\ndistro: " + options.distro + "\nURL: " + url)
@@ -166,7 +187,7 @@ if __name__ == "__main__":
                 #search base-channel
                 for dict in listChannels:
                         #print dict
-                        if dict["label"] == options.distro+"-"+options.release+"-"+options.arch:
+                        if dict["label"] == options.distro+options.release+"-"+options.arch:
                                 if options.verbose: print "INFO: found matching base channel '" + dict["label"] + "'"
                                 options.baseChannel = dict["label"]
 
@@ -201,7 +222,7 @@ if __name__ == "__main__":
                 #download files
                 if options.ignoreExisting == False:
                         if options.verbose: print "INFO: about to download kickstart files for EL "+options.release+" "+options.arch+" from mirror "+options.mirror+"..."
-                        for i in ["images","isolinux","repodata"]:
+                        for i in default_folders:
                                 #setting offset based on mirror and distro
                                 if options.distro == "fedora": dir_offset=6
                                 elif "vault" in options.mirror: dir_offset=3
@@ -233,11 +254,11 @@ if __name__ == "__main__":
                 if options.distro == "fedora": installType = "fedora"
                 else:
                         if "2.1" in options.release: installType = "rhel_2.1"
-                        if "3." in options.release: installType = "rhel_3"
-                        if "4." in options.release: installType = "rhel_4"
-                        if "5." in options.release: installType = "rhel_5"
-                        if "6." in options.release: installType = "rhel_6"
-                        if "7." in options.release: installType = "rhel_7"
+                        if "3" in options.release: installType = "rhel_3"
+                        if "4" in options.release: installType = "rhel_4"
+                        if "5" in options.release: installType = "rhel_5"
+                        if "6" in options.release: installType = "rhel_6"
+                        if "7" in options.release: installType = "rhel_7"
                 if options.debug: print "DEBUG: install type is '" + installType + "'"
 
                 #create distribution
