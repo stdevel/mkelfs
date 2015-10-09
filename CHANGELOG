@@ -1,4 +1,6 @@
 CHANGELOG
+0.4 - 2015-10-09
+- add spacewalk 2.4 API
 
 0.3 - 2014-04-13
 - added default mirrors for Fedora and Scientific Linux
